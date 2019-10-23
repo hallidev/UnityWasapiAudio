@@ -1,11 +1,10 @@
 # UnityWasapiAudio
-Simple WASAPI Audio Visualization library for Unity 2019.x+
-
 An example of WASAPI Loopback Audio in Unity using CSCore
-
 Check out CSCore: https://github.com/filoe/cscore
 
-Instructions:
+This is an updated version of my little Unity audio visualization library including a VFX Graph example.
+
+Instructions (Unity 2019.x, HDRP):
 
 1: Clone / download
 
@@ -18,3 +17,5 @@ Instructions:
 5: Hit "Play"
 
 That's it!
+
+If you don't have VFX Graph installed and would like to use this, just copy the WasapiAudio folder into your own assets folder and delete the Vfx.* files that won't build. It should work going back to Unity 2017.x at least.
