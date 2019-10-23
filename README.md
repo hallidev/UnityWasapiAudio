@@ -1,5 +1,6 @@
 # UnityWasapiAudio
 An example of WASAPI Loopback Audio in Unity using CSCore
+
 Check out CSCore: https://github.com/filoe/cscore
 
 This is an updated version of my little Unity audio visualization library including a VFX Graph example.
