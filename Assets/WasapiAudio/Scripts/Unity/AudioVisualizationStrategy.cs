@@ -3,10 +3,7 @@
     public enum AudioVisualizationStrategy
     {
         Raw,
-        RawSmooth,
         Scaled,
-        ScaledSmooth,
         ScaledMinMax,
-        ScaledMinMaxSmooth
     }
 }

@@ -10,7 +10,7 @@ namespace Assets.WasapiAudio.Scripts.Unity
         [Range(1, 50)]
         public int AudioSmoothingIterations = 5;
         [Range(1, 2)]
-        public float MinMaxThreshold = 1.5f;
+        public float MinMaxThreshold = 1.2f;
         public float MinScale = 0.0f;
         public float MaxScale = 1.0f;
     }

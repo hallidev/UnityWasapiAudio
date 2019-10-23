@@ -5,7 +5,7 @@ namespace Assets.WasapiAudio.Scripts.Core
 {
     public class SpectrumSmoother
     {
-        private int _frameCount;
+        private long _frameCount;
 
         private readonly int _spectrumSize;
         private readonly int _smoothingIterations;
@@ -25,19 +25,19 @@ namespace Assets.WasapiAudio.Scripts.Core
             }
         }
 
-        public float[] Smooth(float[] spectrum)
+        public void AdvanceFrame()
         {
-            // Logic for smoothing the audio over N frames
-            if (_frameCount == int.MaxValue) { _frameCount = 0; }
-
             _frameCount++;
+        }
 
+        public float[] GetSpectrumData(float[] spectrum)
+        {
             // Record and average last N frames
-            for (int i = 0; i < _spectrumSize; i++)
+            for (var i = 0; i < _spectrumSize; i++)
             {
-                int historyIndex = _frameCount % _smoothingIterations;
+                var historyIndex = _frameCount % _smoothingIterations;
 
-                float audioData = spectrum[i];
+                var audioData = spectrum[i];
                 _spectrumHistory[i][historyIndex] = audioData;
 
                 _smoothedSpectrum[i] = _spectrumHistory[i].Average();

@@ -32,7 +32,15 @@ namespace Assets.WasapiAudio.Scripts.Unity
             _wasapiAudio.StartListen();
         }
 
-        public float[] GetSpectrumData(AudioVisualizationStrategy strategy, AudioVisualizationProfile profile)
+        public void Update()
+        {
+            foreach (var smoother in _spectrumSmoothers.Values)
+            {
+                smoother.AdvanceFrame();
+            }
+        }
+
+        public float[] GetSpectrumData(AudioVisualizationStrategy strategy, bool smoothed, AudioVisualizationProfile profile)
         {
             var scaledSpectrumData = new float[SpectrumSize];
             var scaledMinMaxSpectrumData = new float[SpectrumSize];
@@ -90,17 +98,23 @@ namespace Assets.WasapiAudio.Scripts.Unity
             switch (strategy)
             {
                 case AudioVisualizationStrategy.Raw:
+                    if (smoothed)
+                    {
+                        return smoother.GetSpectrumData(_spectrumData);
+                    }
                     return _spectrumData;
                 case AudioVisualizationStrategy.Scaled:
+                    if (smoothed)
+                    {
+                        return smoother.GetSpectrumData(scaledSpectrumData);
+                    }
                     return scaledSpectrumData;
                 case AudioVisualizationStrategy.ScaledMinMax:
+                    if (smoothed)
+                    {
+                        return smoother.GetSpectrumData(scaledMinMaxSpectrumData);
+                    }
                     return scaledMinMaxSpectrumData;
-                case AudioVisualizationStrategy.RawSmooth:
-                    return smoother.Smooth(_spectrumData);
-                case AudioVisualizationStrategy.ScaledSmooth:
-                    return smoother.Smooth(scaledSpectrumData);
-                case AudioVisualizationStrategy.ScaledMinMaxSmooth:
-                    return smoother.Smooth(scaledMinMaxSpectrumData);
                 default:
                     throw new InvalidOperationException($"Invalid strategy: {strategy}");
             }
