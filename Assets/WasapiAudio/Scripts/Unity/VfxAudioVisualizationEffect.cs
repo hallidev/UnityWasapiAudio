@@ -1,5 +1,5 @@
-﻿using UnityEngine.Experimental.VFX;
-using UnityEngine.Experimental.VFX.Utility;
+﻿using UnityEngine.VFX;
+using UnityEngine.VFX.Utility;
 
 namespace Assets.WasapiAudio.Scripts.Unity
 {

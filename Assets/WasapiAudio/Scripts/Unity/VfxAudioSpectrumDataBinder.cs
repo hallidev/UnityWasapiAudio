@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.Experimental.VFX;
-using UnityEngine.Experimental.VFX.Utility;
+using UnityEngine.VFX;
+using UnityEngine.VFX.Utility;
 
 namespace Assets.WasapiAudio.Scripts.Unity
 {
@@ -8,11 +8,11 @@ namespace Assets.WasapiAudio.Scripts.Unity
     [VFXBinder("Audio/Audio Spectrum Data to AttributeMap")]
     public class VfxAudioSpectrumDataBinder : VfxAudioVisualizationEffect
     {
-        [VFXParameterBinding("System.UInt32"), SerializeField]
-        protected ExposedParameter SpectrumSizeParameter = "SpectrumSize";
+        [VFXPropertyBinding("System.UInt32"), SerializeField]
+        protected ExposedProperty SpectrumSizeParameter = "SpectrumSize";
 
-        [VFXParameterBinding("UnityEngine.Texture2D"), SerializeField]
-        protected ExposedParameter SpectrumDataTextureParameter = "SpectrumDataTexture";
+        [VFXPropertyBinding("UnityEngine.Texture2D"), SerializeField]
+        protected ExposedProperty SpectrumDataTextureParameter = "SpectrumDataTexture";
 
         private Texture2D _texture;
         private Color[] _colorCache;
