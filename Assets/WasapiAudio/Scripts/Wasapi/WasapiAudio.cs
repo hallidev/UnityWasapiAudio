@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets.WasapiAudio.Scripts.Core;
+using Assets.WasapiAudio.Scripts.Unity;
 using CSCore;
 using CSCore.CoreAudioAPI;
 using CSCore.DSP;
@@ -25,15 +26,17 @@ namespace Assets.WasapiAudio.Scripts.Wasapi
         private BasicSpectrumProvider _basicSpectrumProvider;
         private LineSpectrum _lineSpectrum;
         private SingleBlockNotificationStream _singleBlockNotificationStream;
+        private WasapiAudioFilter[] _filters;
         private Action<float[]> _receiveAudio;
 
-        public WasapiAudio(WasapiCaptureType captureType, int spectrumSize, ScalingStrategy scalingStrategy, int minFrequency, int maxFrequency, Action<float[]> receiveAudio)
+        public WasapiAudio(WasapiCaptureType captureType, int spectrumSize, ScalingStrategy scalingStrategy, int minFrequency, int maxFrequency, WasapiAudioFilter[] filters, Action<float[]> receiveAudio)
         {
             _captureType = captureType;
             _spectrumSize = spectrumSize;
             _scalingStrategy = scalingStrategy;
             _minFrequency = minFrequency;
             _maxFrequency = maxFrequency;
+            _filters = filters;
             _receiveAudio = receiveAudio;
         }
 
@@ -74,10 +77,33 @@ namespace Assets.WasapiAudio.Scripts.Wasapi
 
             _wasapiCapture.Start();
 
-            _singleBlockNotificationStream = new SingleBlockNotificationStream(_soundInSource.ToSampleSource());
+            var sampleSource = _soundInSource.ToSampleSource();
+
+            if (_filters != null && _filters.Length > 0)
+            {
+                foreach (var filter in _filters)
+                {
+                    sampleSource = sampleSource.AppendSource(x => new BiQuadFilterSource(x));
+                    var biQuadSource = (BiQuadFilterSource) sampleSource;
+                    switch (filter.Type)
+                    {
+                        case WasapiAudioFilterType.LowPass:
+                            biQuadSource.Filter = new LowpassFilter(_soundInSource.WaveFormat.SampleRate, filter.Frequency);
+                            break;
+                        case WasapiAudioFilterType.HighPass:
+                            biQuadSource.Filter = new HighpassFilter(_soundInSource.WaveFormat.SampleRate, filter.Frequency);
+                            break;
+                        case WasapiAudioFilterType.BandPass:
+                            biQuadSource.Filter = new BandpassFilter(_soundInSource.WaveFormat.SampleRate, filter.Frequency);
+                            break;
+                    }
+                }
+            }
+
+            _singleBlockNotificationStream = new SingleBlockNotificationStream(sampleSource);
             _realtimeSource = _singleBlockNotificationStream.ToWaveSource();
 
-           var buffer = new byte[_realtimeSource.WaveFormat.BytesPerSecond / 2];
+            var buffer = new byte[_realtimeSource.WaveFormat.BytesPerSecond / 2];
 
             _soundInSource.DataAvailable += (s, ea) =>
             {
