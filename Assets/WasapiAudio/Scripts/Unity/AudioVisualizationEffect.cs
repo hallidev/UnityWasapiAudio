@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Assets.WasapiAudio.Scripts.Core;
+using UnityEngine;
 
 namespace Assets.WasapiAudio.Scripts.Unity
 {
@@ -6,10 +8,11 @@ namespace Assets.WasapiAudio.Scripts.Unity
     {
         // Inspector Properties
         public WasapiAudioSource WasapiAudioSource;
-        public AudioVisualizationProfile Profile;
-        public AudioVisualizationStrategy Strategy;
-        public bool Smoothed;
-
+        
+        [SerializeReference]
+        [SerializeReferenceButton]
+        public List<SpectrumTransformer> Transformers = new List<SpectrumTransformer>();
+        
         protected int SpectrumSize { get; private set; }
 
         public virtual void Awake()
@@ -31,7 +34,19 @@ namespace Assets.WasapiAudio.Scripts.Unity
                 return null;
             }
 
-            return WasapiAudioSource.GetSpectrumData(Strategy, Smoothed, Profile);
+            // Get raw / unmodified spectrum data
+            var spectrumData = WasapiAudioSource.GetSpectrumData();
+
+            // Run spectrum data through all configured transformers
+            if (Transformers != null && Transformers.Count > 0)
+            {
+                foreach (var transformer in Transformers)
+                {
+                    spectrumData = transformer.Transform(spectrumData);
+                }
+            }
+
+            return spectrumData;
         }
     }
 }
