@@ -79,18 +79,19 @@ namespace Assets.WasapiAudio.Scripts.Core
             _minimumFrequencyIndex = Math.Min(_spectrumProvider.GetFftBandIndex(_minFrequency), _maxFftIndex);
             _maximumFrequencyIndex = Math.Min(_spectrumProvider.GetFftBandIndex(_maxFrequency) + 1, _maxFftIndex);
 
-            int actualResolution = SpectrumResolution;
+            var actualResolution = SpectrumResolution;
 
-            int indexCount = _maximumFrequencyIndex - _minimumFrequencyIndex;
-            double linearIndexBucketSize = Math.Round(indexCount / (double) actualResolution, 3);
+            var indexCount = _maximumFrequencyIndex - _minimumFrequencyIndex;
+            var linearIndexBucketSize = Math.Round(indexCount / (double) actualResolution, 3);
 
             _spectrumIndexMax = _spectrumIndexMax.CheckBuffer(actualResolution, true);
             _spectrumLogScaleIndexMax = _spectrumLogScaleIndexMax.CheckBuffer(actualResolution, true);
 
-            double maxLog = Math.Log(actualResolution, actualResolution);
+            var maxLog = Math.Log(actualResolution, actualResolution);
+            
             for (int i = 1; i < actualResolution; i++)
             {
-                int logIndex =
+                var logIndex =
                     (int) ((maxLog - Math.Log((actualResolution + 1) - i, (actualResolution + 1))) * indexCount) +
                     _minimumFrequencyIndex;
 
@@ -112,7 +113,7 @@ namespace Assets.WasapiAudio.Scripts.Core
             double value0 = 0, value = 0;
             double lastValue = 0;
             double actualMaxValue = maxValue;
-            int spectrumPointIndex = 0;
+            var spectrumPointIndex = 0;
 
             for (int i = _minimumFrequencyIndex; i <= _maximumFrequencyIndex; i++)
             {
@@ -129,7 +130,7 @@ namespace Assets.WasapiAudio.Scripts.Core
                         break;
                 }
 
-                bool recalc = true;
+                var recalc = true;
 
                 value = Math.Max(0, Math.Max(value0, value));
 
@@ -140,13 +141,19 @@ namespace Assets.WasapiAudio.Scripts.Core
                            : _spectrumIndexMax[spectrumPointIndex]))
                 {
                     if (!recalc)
+                    {
                         value = lastValue;
+                    }
 
                     if (value > maxValue)
+                    {
                         value = maxValue;
+                    }
 
                     if (_useAverage && spectrumPointIndex > 0)
+                    {
                         value = (lastValue + value) / 2.0;
+                    }
 
                     dataPoints.Add(new SpectrumPointData {SpectrumPointIndex = spectrumPointIndex, Value = value});
 

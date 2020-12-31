@@ -5,17 +5,17 @@ namespace Assets.WasapiAudio.Scripts.Core
 {
     public class BiQuadFilterSource : SampleAggregatorBase
     {
-        private readonly object _lockObject = new object();
-        private BiQuad _biquad;
+        private readonly object _lockObject = new();
+        private BiQuad _biQuad;
 
         public BiQuad Filter
         {
-            get { return _biquad; }
+            get => _biQuad;
             set
             {
                 lock (_lockObject)
                 {
-                    _biquad = value;
+                    _biQuad = value;
                 }
             }
         }
@@ -26,7 +26,8 @@ namespace Assets.WasapiAudio.Scripts.Core
 
         public override int Read(float[] buffer, int offset, int count)
         {
-            int read = base.Read(buffer, offset, count);
+            var read = base.Read(buffer, offset, count);
+            
             lock (_lockObject)
             {
                 if (Filter != null)

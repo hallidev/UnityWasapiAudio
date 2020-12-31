@@ -2,6 +2,7 @@
 
 namespace Assets.WasapiAudio.Scripts.Unity
 {
+    [ExecuteInEditMode]
     public class AudioVizDebugGizmo : AudioVisualizationEffect
     {
         public float BarWidth = 0.1f;
@@ -25,6 +26,15 @@ namespace Assets.WasapiAudio.Scripts.Unity
                 Gizmos.DrawCube(Vector3.Scale(position + transform.position, transform.localScale), Vector3.Scale(new Vector3(BarWidth, value, 0.2f), transform.localScale));
                 Gizmos.color = Color.red;
             }
+
+#if UNITY_EDITOR
+            // Ensure continuous Update calls.
+            if (!Application.isPlaying)
+            {
+                UnityEditor.EditorApplication.QueuePlayerLoopUpdate();
+                UnityEditor.SceneView.RepaintAll();
+            }
+#endif
         }
     }
 }

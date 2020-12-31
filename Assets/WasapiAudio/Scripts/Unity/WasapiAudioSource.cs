@@ -9,7 +9,7 @@ namespace Assets.WasapiAudio.Scripts.Unity
     [ExecuteInEditMode]
     public class WasapiAudioSource : MonoBehaviour
     {
-        private readonly Dictionary<string, SpectrumSmoother> _spectrumSmoothers = new Dictionary<string, SpectrumSmoother>();
+        private readonly Dictionary<string, SpectrumSmoother> _spectrumSmoothers = new();
 
         private Wasapi.WasapiAudio _wasapiAudio;
         private float[] _spectrumData;
