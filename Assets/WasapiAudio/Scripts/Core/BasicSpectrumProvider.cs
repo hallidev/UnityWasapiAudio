@@ -10,7 +10,7 @@ namespace Assets.WasapiAudio.Scripts.Core
     public class BasicSpectrumProvider : FftProvider, ISpectrumProvider
     {
         private readonly int _sampleRate;
-        private readonly List<object> _contexts = new();
+        private readonly List<object> _contexts = new List<object>();
 
         public BasicSpectrumProvider(int channels, int sampleRate, FftSize fftSize)
             : base(channels, fftSize)

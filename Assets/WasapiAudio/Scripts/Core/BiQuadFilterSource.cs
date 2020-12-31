@@ -5,7 +5,7 @@ namespace Assets.WasapiAudio.Scripts.Core
 {
     public class BiQuadFilterSource : SampleAggregatorBase
     {
-        private readonly object _lockObject = new();
+        private readonly object _lockObject = new object();
         private BiQuad _biQuad;
 
         public BiQuad Filter

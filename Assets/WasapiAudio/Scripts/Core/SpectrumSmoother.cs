@@ -10,7 +10,7 @@ namespace Assets.WasapiAudio.Scripts.Core
         private readonly int _spectrumSize;
         private readonly int _smoothingIterations;
         private readonly float[] _smoothedSpectrum;
-        private readonly List<float[]> _spectrumHistory = new();
+        private readonly List<float[]> _spectrumHistory = new List<float[]>();
 
         public SpectrumSmoother(int spectrumSize, int smoothingIterations)
         {
