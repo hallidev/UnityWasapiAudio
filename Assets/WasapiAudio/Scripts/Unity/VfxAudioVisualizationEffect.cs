@@ -1,4 +1,6 @@
-﻿using UnityEngine.VFX;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.VFX;
 using UnityEngine.VFX.Utility;
 
 namespace Assets.WasapiAudio.Scripts.Unity
@@ -7,6 +9,10 @@ namespace Assets.WasapiAudio.Scripts.Unity
     {
         // Inspector Properties
         public WasapiAudioSource WasapiAudioSource;
+
+        [SerializeReference]
+        [SerializeReferenceButton]
+        public List<SpectrumTransformer> Transformers = new List<SpectrumTransformer>();
 
         protected int SpectrumSize { get; private set; }
 
@@ -22,7 +28,19 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
         protected float[] GetSpectrumData()
         {
-            return WasapiAudioSource.GetSpectrumData();
+            // Get raw / unmodified spectrum data
+            var spectrumData = WasapiAudioSource.GetSpectrumData();
+
+            // Run spectrum data through all configured transformers
+            if (Transformers != null && Transformers.Count > 0)
+            {
+                foreach (var transformer in Transformers)
+                {
+                    spectrumData = transformer.Transform(spectrumData);
+                }
+            }
+
+            return spectrumData;
         }
     }
 }
