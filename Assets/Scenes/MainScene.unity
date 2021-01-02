@@ -339,53 +339,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
---- !u!28 &1042589155
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: AudioSpectrumData64
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 2
-  m_Width: 64
-  m_Height: 1
-  m_CompleteImageSize: 256
-  m_MipsStripped: 0
-  m_TextureFormat: 18
-  m_MipCount: 1
-  m_IsReadable: 1
-  m_IsPreProcessed: 0
-  m_IgnoreMasterTextureLimit: 0
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
-  m_VTOnly: 0
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_LightmapFormat: 0
-  m_ColorSpace: 0
-  m_PlatformBlob: 
-  image data: 256
-  _typelessdata: 8872913de449853db6b9683dd36e643d82ed603d263d6e3dda82463db5d9593dcf65a93df867643db15e2c3d8981593d154e353dfffb1c3d0c652a3c4867223dfa3f3d3ca0a1203d910a433c431f263cf7a2123ce9bc1e3da94f343c2222713d8c9b263ded6c493df6ba1e3d8878713d428b323dd9f6483dd426433c99ee1e3c9d03143ce38b033ccb8a003c616dfd3b8823013ca8e21e3c32650e3cdf211c3cfa17123c8678133c1606303c7cf42e3c8396403c0661293c42b6143c272e0e3c03e9053c617a073cf76e013cdacdf63b1892013cc10d0a3cdb4d033c893b093c90c8213c914c213cc38b1a3c80d7063ca278093c0121013cf5f6ef3bce4ecf3b
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1057544717
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633983271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 60, y: 0, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -734,7 +687,7 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
-  clearColorMode: 0
+  clearColorMode: 1
   backgroundColorHDR: {r: 0, g: 0, b: 0, a: 0}
   clearDepth: 1
   volumeLayerMask:
@@ -838,6 +791,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!28 &1698318377
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AudioSpectrumData64
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 2
+  m_Width: 64
+  m_Height: 1
+  m_CompleteImageSize: 256
+  m_MipsStripped: 0
+  m_TextureFormat: 18
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMasterTextureLimit: 0
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 0
+  m_PlatformBlob: 
+  image data: 256
+  _typelessdata: a60a333f824d3d3e97e8143e9332473e2349393e90cb3c3e1b07063e06890c3e90dde23ca6f2123e1141fc3d79ea023e7e00e23c9ae3eb3c178bfd3dbab8e53c2848f73c1b72c43ca503cc3cf3b2d63c5af0ac3ce643c33c6e80b83cb369c23c4360ad3cc0c09f3cb74c943c5162aa3c6918ab3c6360a13c8c1fa73c6261a43ce01fa83caa16a13c049ea33c69e6a33c4045b43c0329bf3c22c6c83c6dbdbe3c9ad2b03c6f27d93cdb2de63cc235e13ce30ee73c6763ef3c1af8f23ce4c7ee3ca95ddd3c1d2beb3c53e0eb3c60f2023e4ed1fc3da781143eca581c3e25260d3ebc70183efc38173e8c42133eba6c0e3e49b9fc3d9c96e93cc15bdc3c263ec33c
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1789329210
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,10 +940,10 @@ MonoBehaviour:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
-            time: -0.0013694763
-            value: 0.16174316
-            inSlope: 0.83711046
-            outSlope: 0.83711046
+            time: 0.0006828308
+            value: 0.29785156
+            inSlope: 0.7026282
+            outSlope: 0.7026282
             tangentMode: 34
             weightedMode: 0
             inWeight: 0
@@ -951,8 +951,8 @@ MonoBehaviour:
           - serializedVersion: 3
             time: 1
             value: 1
-            inSlope: 0.83711046
-            outSlope: 0.83711046
+            inSlope: 0.7026282
+            outSlope: 0.7026282
             tangentMode: 34
             weightedMode: 0
             inWeight: 0.33333334
@@ -960,13 +960,14 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+        IgnoreLowBand: 1
     00000001:
       type: {class: AverageBoostSpectrumTransformer, ns: Assets.WasapiAudio.Scripts.Unity.Transformers,
         asm: Assembly-CSharp}
       data:
         Enabled: 1
         BelowAverageMultiplier: 0.5
-        AboveAverageMultiplier: 1.5
+        AboveAverageMultiplier: 2
 --- !u!114 &1863103814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,7 +1062,7 @@ VisualEffect:
       m_Array: []
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 1042589155}
+      - m_Value: {fileID: 1698318377}
         m_Name: SpectrumDataTexture
         m_Overridden: 1
     m_Bool:
@@ -1074,7 +1075,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863103812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.63, y: 0, z: 0}
+  m_LocalPosition: {x: 60, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1147,6 +1148,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+        IgnoreLowBand: 1
     00000001:
       type: {class: AverageBoostSpectrumTransformer, ns: Assets.WasapiAudio.Scripts.Unity.Transformers,
         asm: Assembly-CSharp}
