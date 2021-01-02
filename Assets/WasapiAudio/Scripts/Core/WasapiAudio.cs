@@ -109,7 +109,7 @@ namespace Assets.WasapiAudio.Scripts.Core
             {
                 while (_realtimeSource.Read(buffer, 0, buffer.Length) > 0)
                 {
-                    float[] spectrumData = _lineSpectrum.GetSpectrumData(MaxAudioValue);
+                    var spectrumData = _lineSpectrum.GetSpectrumData(MaxAudioValue);
 
                     if (spectrumData != null)
                     {

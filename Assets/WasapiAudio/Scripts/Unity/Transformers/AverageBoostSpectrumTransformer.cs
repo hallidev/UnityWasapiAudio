@@ -3,10 +3,10 @@
 namespace Assets.WasapiAudio.Scripts.Unity.Transformers
 {
     [Serializable]
-    public class MinMaxSpectrumTransformer : SpectrumTransformer
+    public class AverageBoostSpectrumTransformer : SpectrumTransformer
     {
-        public float MinMultiplier;
-        public float MaxMultiplier;
+        public float BelowAverageMultiplier;
+        public float AboveAverageMultiplier;
 
         protected override void PerformTransform(float[] input, ref float[] output)
         {
@@ -14,11 +14,11 @@ namespace Assets.WasapiAudio.Scripts.Unity.Transformers
             {
                 if (input[i] <= InputAverage)
                 {
-                    output[i] = input[i] * MinMultiplier;
+                    output[i] = input[i] * BelowAverageMultiplier;
                 }
                 else
                 {
-                    output[i] = input[i] * MaxMultiplier;
+                    output[i] = input[i] * AboveAverageMultiplier;
                 }
             }
         }

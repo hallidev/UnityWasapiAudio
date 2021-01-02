@@ -10,7 +10,7 @@ namespace Assets.WasapiAudio.Scripts.Unity.Transformers
         private SpectrumSmoother _smoother;
 
         [Range(1, 50)]
-        public byte Iterations;
+        public byte Iterations = 1;
 
         protected override void PerformTransform(float[] input, ref float[] output)
         {
