@@ -123,53 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!28 &100564188
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: AudioSpectrumData64
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 2
-  m_Width: 64
-  m_Height: 1
-  m_CompleteImageSize: 256
-  m_MipsStripped: 0
-  m_TextureFormat: 18
-  m_MipCount: 1
-  m_IsReadable: 1
-  m_IsPreProcessed: 0
-  m_IgnoreMasterTextureLimit: 0
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
-  m_VTOnly: 0
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_LightmapFormat: 0
-  m_ColorSpace: 0
-  m_PlatformBlob: 
-  image data: 256
-  _typelessdata: 3f21823e5f53a53ef905a33e7b67c83e749dab3eea95823e1723643eb2561f3e58eb1a3e9fbee03d1423d63db3b6c13d45aab63d986b9a3d806f8e3d140d933d99dd8c3d099b9f3d469ec53d26f6d23d535df23d5ad9f13dd6af053eeb17173ecd7b113ee867163e88831f3e0190163e331e063e8495f43d4caae23d70d9d63da7b4bd3ddebef23d0bf4ce3dc19bc43d14f8ac3d4245983d650f943d2fbe9c3d334c743d3f8d6c3dbf96563dea95393d73924c3db9a3443d2cc53a3d0eb04c3d45cb5a3d2a873e3dd88c3b3d28da3b3d00df3e3d5435303dffa4253dc2192d3da11c2f3d7b603b3d5bb92c3d0ac5193d6316043d6bc9e03c0a50bd3cd3d99d3c
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &313291211
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +927,7 @@ VisualEffect:
       m_Array: []
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 100564188}
+      - m_Value: {fileID: 0}
         m_Name: SpectrumDataTexture
         m_Overridden: 1
     m_Bool:
@@ -993,6 +946,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!28 &2003434593
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AudioSpectrumData64
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 2
+  m_Width: 64
+  m_Height: 1
+  m_CompleteImageSize: 256
+  m_MipsStripped: 0
+  m_TextureFormat: 18
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMasterTextureLimit: 0
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 0
+  m_PlatformBlob: 
+  image data: 256
+  _typelessdata: fdc5c13e5bd7a03e9515983e7781933e7eca803e6cf6743e1cd3403e6012383e1b9c1f3e6ec00b3e9962343ea27f1b3e21c2253e80d5653e5ca63a3e21757e3ed0d24e3e5b4a1f3e70d11c3e417c153e268b433eafec1b3e81f0083ebba5053e2b14063ed946ed3d25dff73da11deb3da28aee3d3997cb3d549add3df877d53d6c25d53d2b42b63dd855d33d0b94b93d6e16c93dfe96e13db7acd73d14b7b63d3a99d63d25f0c13d5c8dd83db760c33d73dbbb3df6f8a23d60b2ac3dc2fba73d26f79e3d4891b33d82b89e3d29489f3d5b12953dca89953d3d0d8a3dc783833dc5a48c3d47d2963de8e69c3dc3c0a63d436ba03d9af69f3d9477903d05e3813d
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &2030621181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,7 +1026,6 @@ MonoBehaviour:
   Transformers:
   - id: 0
   - id: 1
-  - id: 2
   BarWidth: 0.2
   Scale: 20
   Power: 1
@@ -1042,18 +1041,18 @@ MonoBehaviour:
           m_Curve:
           - serializedVersion: 3
             time: 0
-            value: 0.49835205
-            inSlope: 0.997393
-            outSlope: 0.997393
+            value: 0.10467529
+            inSlope: 0.8953247
+            outSlope: 0.8953247
             tangentMode: 34
             weightedMode: 0
             inWeight: 0
             outWeight: 0.33333334
           - serializedVersion: 3
-            time: 1.0067139
-            value: 1.5024414
-            inSlope: 0.997393
-            outSlope: 0.997393
+            time: 1
+            value: 1
+            inSlope: 0.8953247
+            outSlope: 0.8953247
             tangentMode: 34
             weightedMode: 0
             inWeight: 0.33333334
@@ -1062,17 +1061,11 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
     00000001:
-      type: {class: MinMaxSpectrumTransformer, ns: Assets.WasapiAudio.Scripts.Unity.Transformers,
+      type: {class: SmoothSpectrumTransformer, ns: Assets.WasapiAudio.Scripts.Unity.Transformers,
         asm: Assembly-CSharp}
       data:
-        Enabled: 0
-        MinMultiplier: 0.5
-        MaxMultiplier: 1.5
-    00000002:
-      type: {class: NormalizeSpectrumTransformer, ns: Assets.WasapiAudio.Scripts.Unity.Transformers,
-        asm: Assembly-CSharp}
-      data:
-        Enabled: 0
+        Enabled: 1
+        Iterations: 1
 --- !u!4 &2030621183
 Transform:
   m_ObjectHideFlags: 0

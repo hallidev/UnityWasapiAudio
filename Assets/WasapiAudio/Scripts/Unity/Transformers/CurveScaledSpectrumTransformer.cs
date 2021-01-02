@@ -8,7 +8,7 @@ namespace Assets.WasapiAudio.Scripts.Unity.Transformers
     {
         public AnimationCurve ScaleCurve;
 
-        protected override void PerformTransform(float[] input, float[] output)
+        protected override void PerformTransform(float[] input, ref float[] output)
         {
             if (ScaleCurve == null)
             {

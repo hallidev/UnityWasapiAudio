@@ -32,12 +32,12 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
             if (Enabled)
             {
-                PerformTransform(_input, _output);
+                PerformTransform(_input, ref _output);
             }
 
             return Enabled ? _output : _input;
         }
 
-        protected abstract void PerformTransform(float[] input, float[] output);
+        protected abstract void PerformTransform(float[] input, ref float[] output);
     }
 }

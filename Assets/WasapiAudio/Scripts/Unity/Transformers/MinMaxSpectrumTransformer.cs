@@ -8,7 +8,7 @@ namespace Assets.WasapiAudio.Scripts.Unity.Transformers
         public float MinMultiplier;
         public float MaxMultiplier;
 
-        protected override void PerformTransform(float[] input, float[] output)
+        protected override void PerformTransform(float[] input, ref float[] output)
         {
             for (int i = 0; i < input.Length; i++)
             {

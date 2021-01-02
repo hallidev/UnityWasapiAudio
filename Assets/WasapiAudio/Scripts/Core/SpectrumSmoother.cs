@@ -8,34 +8,33 @@ namespace Assets.WasapiAudio.Scripts.Core
         private long _iteration;
 
         private readonly int _spectrumSize;
-        private readonly int _smoothingIterations;
         private readonly float[] _smoothedSpectrum;
         private readonly List<float[]> _spectrumHistory = new List<float[]>();
+        
+        public byte SmoothingIterations { get; }
 
-        public SpectrumSmoother(int spectrumSize, int smoothingIterations)
+        public SpectrumSmoother(int spectrumSize, byte smoothingIterations)
         {
             _spectrumSize = spectrumSize;
-            _smoothingIterations = smoothingIterations;
+
+            SmoothingIterations = smoothingIterations;
 
             _smoothedSpectrum = new float[_spectrumSize];
 
             for (int i = 0; i < _spectrumSize; i++)
             {
-                _spectrumHistory.Add(new float[_smoothingIterations]);
+                _spectrumHistory.Add(new float[SmoothingIterations]);
             }
-        }
-
-        public void Step()
-        {
-            _iteration++;
         }
 
         public float[] GetSpectrumData(float[] spectrum)
         {
+            _iteration++;
+            
             // Record and average last N frames
             for (var i = 0; i < _spectrumSize; i++)
             {
-                var historyIndex = _iteration % _smoothingIterations;
+                var historyIndex = _iteration % SmoothingIterations;
 
                 var audioData = spectrum[i];
                 _spectrumHistory[i][historyIndex] = audioData;
