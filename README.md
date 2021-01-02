@@ -5,7 +5,7 @@ Check out CSCore: https://github.com/filoe/cscore
 
 This is an updated version of my little Unity audio visualization library including a VFX Graph example.
 
-Instructions (Unity 2019.x, HDRP):
+Instructions (Unity 2020.x, HDRP):
 
 1: Clone / download
 
