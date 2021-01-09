@@ -5,8 +5,8 @@ namespace Assets.WasapiAudio.Scripts.Unity.Transformers
     [Serializable]
     public class AverageBoostSpectrumTransformer : SpectrumTransformer
     {
-        public float BelowAverageMultiplier;
-        public float AboveAverageMultiplier;
+        public float BelowAverageMultiplier = 0.5f;
+        public float AboveAverageMultiplier = 2.0f;
 
         protected override void PerformTransform(float[] input, ref float[] output)
         {

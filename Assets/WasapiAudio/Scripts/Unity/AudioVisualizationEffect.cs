@@ -7,11 +7,14 @@ namespace Assets.WasapiAudio.Scripts.Unity
     {
         // Inspector Properties
         public WasapiAudioSource WasapiAudioSource;
+
+        [SpectrumDataPreview]
+        public SpectrumData Preview;
         
         [SerializeReference]
         [SerializeReferenceButton]
         public List<SpectrumTransformer> Transformers = new List<SpectrumTransformer>();
-        
+
         protected int SpectrumSize { get; private set; }
 
         public virtual void Awake()
@@ -23,6 +26,8 @@ namespace Assets.WasapiAudio.Scripts.Unity
             }
 
             SpectrumSize = WasapiAudioSource.SpectrumSize;
+            
+            Preview = new SpectrumData();
         }
 
         protected float[] GetSpectrumData()
@@ -44,6 +49,8 @@ namespace Assets.WasapiAudio.Scripts.Unity
                     spectrumData = transformer.Transform(spectrumData);
                 }
             }
+
+            Preview.Values = spectrumData;
 
             return spectrumData;
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.WasapiAudio.Scripts.Unity
+namespace Assets.WasapiAudio.Scripts.Core
 {
     public enum WasapiAudioFilterType
     {
