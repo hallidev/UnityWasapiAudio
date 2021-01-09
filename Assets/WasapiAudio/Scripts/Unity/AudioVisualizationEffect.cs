@@ -8,12 +8,12 @@ namespace Assets.WasapiAudio.Scripts.Unity
         // Inspector Properties
         public WasapiAudioSource WasapiAudioSource;
 
-        [SpectrumDataPreview]
-        public SpectrumData Preview;
-        
         [SerializeReference]
         [SerializeReferenceButton]
         public List<SpectrumTransformer> Transformers = new List<SpectrumTransformer>();
+
+        [SpectrumDataPreview]
+        public SpectrumData Preview;
 
         protected int SpectrumSize { get; private set; }
 
@@ -26,7 +26,6 @@ namespace Assets.WasapiAudio.Scripts.Unity
             }
 
             SpectrumSize = WasapiAudioSource.SpectrumSize;
-            
             Preview = new SpectrumData();
         }
 

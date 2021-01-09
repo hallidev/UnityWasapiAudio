@@ -61,6 +61,8 @@ namespace Assets.WasapiAudio.Editor
 
                 x += barWidth;
             }
+
+            EditorGUI.PrefixLabel(position, label);
         }
     }
 }

@@ -14,6 +14,9 @@ namespace Assets.WasapiAudio.Scripts.Unity
         [SerializeReferenceButton]
         public List<SpectrumTransformer> Transformers = new List<SpectrumTransformer>();
 
+        [SpectrumDataPreview]
+        public SpectrumData Preview;
+
         protected int SpectrumSize { get; private set; }
 
         public override bool IsValid(VisualEffect component)
@@ -24,6 +27,7 @@ namespace Assets.WasapiAudio.Scripts.Unity
         public override void UpdateBinding(VisualEffect component)
         {
             SpectrumSize = WasapiAudioSource.SpectrumSize;
+            Preview = new SpectrumData();
         }
 
         protected float[] GetSpectrumData()
@@ -39,6 +43,8 @@ namespace Assets.WasapiAudio.Scripts.Unity
                     spectrumData = transformer.Transform(spectrumData);
                 }
             }
+
+            Preview.Values = spectrumData;
 
             return spectrumData;
         }

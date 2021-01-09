@@ -339,53 +339,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
---- !u!28 &636137989
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: AudioSpectrumData64
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 2
-  m_Width: 64
-  m_Height: 1
-  m_CompleteImageSize: 256
-  m_MipsStripped: 0
-  m_TextureFormat: 18
-  m_MipCount: 1
-  m_IsReadable: 1
-  m_IsPreProcessed: 0
-  m_IgnoreMasterTextureLimit: 0
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
-  m_VTOnly: 0
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_LightmapFormat: 0
-  m_ColorSpace: 0
-  m_PlatformBlob: 
-  image data: 256
-  _typelessdata: 4b22983e00c99c3e1454c33e9a7aa33e22d5c73efafdba3e04f5c03e2beb9c3ec05e9c3efa30a33e4cd3913e10c18a3e858da03e1e89863e256d803e7b1e5a3e625e593e6eba3e3e5f91c13b928ac83bb237443ee282553ea660443e5af6443e21d03c3e0a2ce53beea94c3eb2af5a3e3eb5433ea6f2593e92b3e53bf89fde3bf75ce73b1139393e7f9ad83bdeafc93bbbedc23b9397c93be516b13bd744a83be30e903bcb178d3bc9699d3b31e88c3b06258e3b9d4a923bd686913bcc01933b9f3d8e3bb751893b6bad8b3bfb93823bceef813bf3cd773b6d2d783b5a2e673b32b55e3b6b3a5c3b3a03593b6555513b3a54503b197b4a3bb89f403becfc343b
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1057544717
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1789329211
 Transform:
   m_ObjectHideFlags: 0
@@ -950,6 +903,72 @@ MonoBehaviour:
   Transformers:
   - id: 0
   - id: 1
+  Preview:
+    Values:
+    - 0.010245354
+    - 0.008974996
+    - 0.31327415
+    - 0.32377672
+    - 0.3365067
+    - 0.010452329
+    - 0.010848107
+    - 0.010509587
+    - 0.31563604
+    - 0.00936272
+    - 0.009245865
+    - 0.009267591
+    - 0.011579104
+    - 0.4416961
+    - 0.3106459
+    - 0.011175276
+    - 0.009866722
+    - 0.35637677
+    - 0.30055836
+    - 0.011143609
+    - 0.2987242
+    - 0.3136744
+    - 0.0116115315
+    - 0.29995626
+    - 0.31900898
+    - 0.2957875
+    - 0.01030385
+    - 0.010576265
+    - 0.010941901
+    - 0.010646247
+    - 0.4252494
+    - 0.3613561
+    - 0.3132017
+    - 0.011048348
+    - 0.009371527
+    - 0.009910779
+    - 0.009954388
+    - 0.011347041
+    - 0.29613924
+    - 0.3083437
+    - 0.011120892
+    - 0.009954421
+    - 0.010262894
+    - 0.009941934
+    - 0.0113838175
+    - 0.010639278
+    - 0.011183541
+    - 0.30579078
+    - 0.32323748
+    - 0.35235152
+    - 0.33814746
+    - 0.3540029
+    - 0.33977032
+    - 0.35724568
+    - 0.3389727
+    - 0.34646434
+    - 0.3100409
+    - 0.011523846
+    - 0.31326252
+    - 0.30327898
+    - 0.011575462
+    - 0.010144056
+    - 0.009269154
+    - 0.005731451
   SpectrumSizeParameter:
     m_Name: SpectrumSize
   SpectrumDataTextureParameter:
@@ -1086,7 +1105,7 @@ VisualEffect:
       m_Array: []
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 636137989}
+      - m_Value: {fileID: 0}
         m_Name: SpectrumDataTexture
         m_Overridden: 1
     m_Bool:
