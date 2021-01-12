@@ -9,6 +9,7 @@ namespace Assets.WasapiAudio.Editor
     public class SpectrumDataPreviewDrawer : PropertyDrawer
     {
         private const float DrawerHeight = 150.0f;
+        private const float AverageBarHeight = 5.0f;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
@@ -62,7 +63,7 @@ namespace Assets.WasapiAudio.Editor
                     var averageLine = new Rect(position.x,
                         position.y + DrawerHeight - average,
                         position.width,
-                        barWidth / 4);
+                        AverageBarHeight);
 
                     EditorGUI.DrawRect(averageLine, Color.blue);
 
