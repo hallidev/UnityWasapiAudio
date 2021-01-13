@@ -6,6 +6,8 @@ namespace Assets.WasapiAudio.Scripts.Unity.Transformers
     [Serializable]
     public class PercentileBoostSpectrumTransformer : SpectrumTransformer
     {
+        private float[] _sortedPercentileArray;
+        
         [Range(0.0f, 1.0f)]
         public float Percentile = 0.5f;
         public float BelowPercentileMultiplier = 0.5f;
@@ -13,11 +15,18 @@ namespace Assets.WasapiAudio.Scripts.Unity.Transformers
 
         protected override void PerformTransform(float[] input, ref float[] output)
         {
-            var percentile = GetPercentile(input, Percentile);
+            if (_sortedPercentileArray == null || _sortedPercentileArray.Length != input.Length)
+            {
+                _sortedPercentileArray = new float[input.Length];
+            }
+            
+            input.CopyTo(_sortedPercentileArray, 0);
+            
+            var percentile = GetPercentile(_sortedPercentileArray, Percentile);
             
             for (int i = 0; i < input.Length; i++)
             {
-                if (input[i] <= percentile)
+                if (input[i] < percentile)
                 {
                     output[i] = input[i] * BelowPercentileMultiplier;
                 }
