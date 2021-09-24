@@ -449,53 +449,6 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
---- !u!28 &1213197231
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: AudioSpectrumData64
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 2
-  m_Width: 64
-  m_Height: 1
-  m_CompleteImageSize: 256
-  m_MipsStripped: 0
-  m_TextureFormat: 18
-  m_MipCount: 1
-  m_IsReadable: 1
-  m_IsPreProcessed: 0
-  m_IgnoreMasterTextureLimit: 0
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
-  m_VTOnly: 0
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_LightmapFormat: 0
-  m_ColorSpace: 0
-  m_PlatformBlob: 
-  image data: 256
-  _typelessdata: 94b08e3ddb668f3d8275903ddccd943d1313983dd9c3993d94bf9b3d16d39f3d7fa9a23d85c7a23d7953a33d590ca53d9d25ac3d07ffb03d6386b33d86c0b63dee3fbe3d16b6be3d3c07d23df8e9db3de1a2e23d5394e53d4cd8ee3d325bf23dc33bf53de18ff83d142bfa3d09fafa3d0b0afd3db36a023e0c9b033e4bda053ec515073e869c073e59940b3e47d10f3efed0103e76b9133e693a143e2cf0163ec727173ea70f183eed01193e51121a3e9ea41a3e83d21a3e74b11c3ee6e91c3e98de1e3e38611f3edb0b203e4289213ec395233ec9e6233eba87243e1b91243e7ec0243e532d263eea71d03e416ed13ec3d9d53ef312d73e147ce73e97d6003f
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1346627525
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1789329211
 Transform:
   m_ObjectHideFlags: 0
@@ -834,8 +787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WasapiAudioSource: {fileID: 1057544718}
-  Transformers:
-  - id: 0
+  Transformers: []
   Preview:
     Values:
     - 0.6300539
@@ -907,8 +859,6 @@ MonoBehaviour:
   Power: 1.5
   references:
     version: 1
-    00000000:
-      type: {class: , ns: , asm: }
 --- !u!1 &1863103812
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,70 +897,70 @@ MonoBehaviour:
   - id: 1
   Preview:
     Values:
-    - 0.06967273
-    - 0.0700204
-    - 0.07053663
-    - 0.07265827
-    - 0.07425513
-    - 0.07508058
-    - 0.076049
-    - 0.07803933
-    - 0.07942485
-    - 0.079482116
-    - 0.079749055
-    - 0.08058996
-    - 0.08405612
-    - 0.086423926
-    - 0.087658666
-    - 0.0892344
-    - 0.09289537
-    - 0.09312074
-    - 0.10255286
-    - 0.107379854
-    - 0.11066223
-    - 0.11209931
-    - 0.11662349
-    - 0.118338004
-    - 0.11974289
-    - 0.12136818
-    - 0.12215248
-    - 0.12254722
-    - 0.12355431
-    - 0.12736015
-    - 0.12852114
-    - 0.13071553
-    - 0.13191898
-    - 0.13243303
-    - 0.13630809
-    - 0.14044677
-    - 0.14142224
-    - 0.14426216
-    - 0.14475407
-    - 0.14740056
-    - 0.14761268
-    - 0.14849721
-    - 0.14942141
-    - 0.1504605
-    - 0.15101859
-    - 0.15119366
-    - 0.15302068
-    - 0.153236
-    - 0.155146
-    - 0.1556443
-    - 0.15629523
-    - 0.15775016
-    - 0.15975098
-    - 0.16006006
-    - 0.160674
-    - 0.16070978
-    - 0.16089055
-    - 0.16228227
-    - 0.4071191
-    - 0.4090443
-    - 0.41767702
-    - 0.42006645
-    - 0.45211852
-    - 0.5032744
+    - 0.12528373
+    - 0.13494201
+    - 0.12280314
+    - 0.37533903
+    - 0.11825112
+    - 0.13465677
+    - 0.399491
+    - 0.34667507
+    - 0.50693727
+    - 0.40826932
+    - 0.36433163
+    - 0.13113952
+    - 0.10440437
+    - 0.09072824
+    - 0.07576109
+    - 0.07801296
+    - 0.07424706
+    - 0.08232977
+    - 0.08116785
+    - 0.08343425
+    - 0.077282794
+    - 0.07710039
+    - 0.081694916
+    - 0.0877413
+    - 0.095088616
+    - 0.10869789
+    - 0.08791173
+    - 0.08217377
+    - 0.10017496
+    - 0.081930086
+    - 0.094875224
+    - 0.08039095
+    - 0.080104314
+    - 0.109441884
+    - 0.08847781
+    - 0.098886035
+    - 0.082642645
+    - 0.0845195
+    - 0.07524311
+    - 0.091505
+    - 0.086004615
+    - 0.09067236
+    - 0.07539596
+    - 0.06922151
+    - 0.07239775
+    - 0.08125534
+    - 0.07107267
+    - 0.064131655
+    - 0.06880232
+    - 0.062164173
+    - 0.059169397
+    - 0.056138117
+    - 0.0616157
+    - 0.05650192
+    - 0.05642751
+    - 0.062550426
+    - 0.073540695
+    - 0.07172007
+    - 0.063342586
+    - 0.063330546
+    - 0.0565664
+    - 0.050798144
+    - 0.045910653
+    - 0.043796714
   SpectrumSizeParameter:
     m_Name: SpectrumSize
   SpectrumDataTextureParameter:
@@ -1148,7 +1098,7 @@ VisualEffect:
       m_Array: []
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 1213197231}
+      - m_Value: {fileID: 0}
         m_Name: SpectrumDataTexture
         m_Overridden: 1
     m_Bool:
