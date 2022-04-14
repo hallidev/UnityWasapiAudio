@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CSCore.DSP;
 
 namespace Assets.WasapiAudio.Scripts.Core
 {

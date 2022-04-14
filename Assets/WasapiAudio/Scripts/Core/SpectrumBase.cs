@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using CSCore;
-using CSCore.DSP;
 
 namespace Assets.WasapiAudio.Scripts.Core
 {
