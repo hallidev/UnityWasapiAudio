@@ -1,5 +1,4 @@
 ﻿using System;
-using Assets.WasapiAudio.Scripts.Unity;
 using CSCore;
 using CSCore.CoreAudioAPI;
 using CSCore.DSP;

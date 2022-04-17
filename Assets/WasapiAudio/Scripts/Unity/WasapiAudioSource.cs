@@ -1,4 +1,5 @@
-﻿using Assets.WasapiAudio.Scripts.Core;
+﻿using System.Linq;
+using Assets.WasapiAudio.Scripts.Core;
 using UnityEngine;
 
 namespace Assets.WasapiAudio.Scripts.Unity
@@ -8,6 +9,8 @@ namespace Assets.WasapiAudio.Scripts.Unity
     {
         private Core.WasapiAudio _wasapiAudio;
         private float[] _spectrumData;
+
+        public bool IsIdle => _spectrumData.All(v => v < 0.001f);
 
         // Inspector Properties
         public WasapiCaptureType CaptureType = WasapiCaptureType.Loopback;
@@ -31,7 +34,7 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
         public void Update()
         {
-
+            
         }
 
         public float[] GetSpectrumData()
