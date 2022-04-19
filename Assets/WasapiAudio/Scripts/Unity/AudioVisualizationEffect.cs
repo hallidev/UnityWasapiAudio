@@ -16,6 +16,7 @@ namespace Assets.WasapiAudio.Scripts.Unity
         public SpectrumData Preview;
 
         protected int SpectrumSize { get; private set; }
+        protected bool IsIdle => WasapiAudioSource.IsIdle;
 
         public virtual void Awake()
         {

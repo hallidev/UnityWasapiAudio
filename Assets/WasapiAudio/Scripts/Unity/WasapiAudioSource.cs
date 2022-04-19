@@ -1,4 +1,5 @@
-﻿using Assets.WasapiAudio.Scripts.Core;
+﻿using System.Linq;
+using Assets.WasapiAudio.Scripts.Core;
 using UnityEngine;
 
 namespace Assets.WasapiAudio.Scripts.Unity
@@ -9,10 +10,13 @@ namespace Assets.WasapiAudio.Scripts.Unity
         private Core.WasapiAudio _wasapiAudio;
         private float[] _spectrumData;
 
+        public bool IsIdle => _spectrumData.All(v => v < 0.001f);
+
         // Inspector Properties
         public WasapiCaptureType CaptureType = WasapiCaptureType.Loopback;
         public int SpectrumSize = 32;
         public ScalingStrategy ScalingStrategy = ScalingStrategy.Sqrt;
+        public WindowFunctionType WindowFunctionType = WindowFunctionType.BlackmannHarris;
         public int MinFrequency = 100;
         public int MaxFrequency = 20000;
         public WasapiAudioFilter[] Filters;
@@ -20,7 +24,7 @@ namespace Assets.WasapiAudio.Scripts.Unity
         public void Awake()
         {
             // Setup loopback audio and start listening
-            _wasapiAudio = new Core.WasapiAudio(CaptureType, SpectrumSize, ScalingStrategy, MinFrequency, MaxFrequency, Filters, spectrumData =>
+            _wasapiAudio = new Core.WasapiAudio(CaptureType, SpectrumSize, ScalingStrategy, WindowFunctionType, MinFrequency, MaxFrequency, Filters, spectrumData =>
             {
                 _spectrumData = spectrumData;
             });
@@ -30,7 +34,7 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
         public void Update()
         {
-
+            
         }
 
         public float[] GetSpectrumData()

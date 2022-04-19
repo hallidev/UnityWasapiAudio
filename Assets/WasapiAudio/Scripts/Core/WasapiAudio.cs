@@ -1,6 +1,7 @@
 ﻿using System;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
 
 namespace Assets.WasapiAudio.Scripts.Core
 {
@@ -12,23 +13,25 @@ namespace Assets.WasapiAudio.Scripts.Core
         private readonly WasapiCaptureType _captureType;
         private readonly int _spectrumSize;
         private readonly ScalingStrategy _scalingStrategy;
+        private readonly WindowFunctionType _windowFunctionType;
         private readonly int _minFrequency;
         private readonly int _maxFrequency;
 
         private WasapiCapture _wasapiCapture;
-        private SoundInSource _soundInSource;
-        private IWaveSource _realtimeSource;
-        private SingleBlockNotificationStream _singleBlockNotificationStream;
+        private WaveInProvider _waveInProvider;
+        private WaveToSampleProvider _waveToSampleProvider;
+        private NotifyingSampleProvider _notifyingSampleProvider;
         private BasicSpectrumProvider _basicSpectrumProvider;
         private LineSpectrum _lineSpectrum;
         private WasapiAudioFilter[] _filters;
         private Action<float[]> _receiveAudio;
 
-        public WasapiAudio(WasapiCaptureType captureType, int spectrumSize, ScalingStrategy scalingStrategy, int minFrequency, int maxFrequency, WasapiAudioFilter[] filters, Action<float[]> receiveAudio)
+        public WasapiAudio(WasapiCaptureType captureType, int spectrumSize, ScalingStrategy scalingStrategy, WindowFunctionType windowFunctionType, int minFrequency, int maxFrequency, WasapiAudioFilter[] filters, Action<float[]> receiveAudio)
         {
             _captureType = captureType;
             _spectrumSize = spectrumSize;
             _scalingStrategy = scalingStrategy;
+            _windowFunctionType = windowFunctionType;
             _minFrequency = minFrequency;
             _maxFrequency = maxFrequency;
             _filters = filters;
@@ -40,6 +43,7 @@ namespace Assets.WasapiAudio.Scripts.Core
             switch (_captureType)
             {
                 case WasapiCaptureType.Loopback:
+                    var defaultDevice = new MMDeviceEnumerator().GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
                     _wasapiCapture = new WasapiLoopbackCapture();
                     break;
                 case WasapiCaptureType.Microphone:
@@ -54,9 +58,37 @@ namespace Assets.WasapiAudio.Scripts.Core
                     throw new InvalidOperationException("Unhandled WasapiCaptureType");
             }
 
-            _soundInSource = new SoundInSource(_wasapiCapture);
+            _waveInProvider = new WaveInProvider(_wasapiCapture);
+            _waveToSampleProvider = new WaveToSampleProvider(_waveInProvider);
+            _notifyingSampleProvider = new NotifyingSampleProvider(_waveToSampleProvider);
 
-            _basicSpectrumProvider = new BasicSpectrumProvider(_wasapiCapture.WaveFormat.Channels, _wasapiCapture.WaveFormat.SampleRate, CFftSize);
+            WindowFunction windowFunction = null;
+
+            switch (_windowFunctionType)
+            {
+                case WindowFunctionType.None:
+                    windowFunction = WindowFunctions.None;
+                    break;
+                case WindowFunctionType.Hamming:
+                    windowFunction = WindowFunctions.Hamming;
+                    break;
+                case WindowFunctionType.HammingPeriodic:
+                    windowFunction = WindowFunctions.HammingPeriodic;
+                    break;
+                case WindowFunctionType.Hanning:
+                    windowFunction = WindowFunctions.Hanning;
+                    break;
+                case WindowFunctionType.HanningPeriodic:
+                    windowFunction = WindowFunctions.HanningPeriodic;
+                    break;
+                case WindowFunctionType.BlackmannHarris:
+                    windowFunction = WindowFunctions.BlackmannHarris;
+                    break;
+                default:
+                    throw new Exception("Unknown WindowFunctionType");
+            }
+
+            _basicSpectrumProvider = new BasicSpectrumProvider(_wasapiCapture.WaveFormat.Channels, _wasapiCapture.WaveFormat.SampleRate, CFftSize, windowFunction);
 
             _lineSpectrum = new LineSpectrum(CFftSize, _minFrequency, _maxFrequency)
             {
@@ -66,8 +98,6 @@ namespace Assets.WasapiAudio.Scripts.Core
                 IsXLogScale = true,
                 ScalingStrategy = _scalingStrategy
             };
-
-            var sampleSource = _soundInSource.ToSampleSource();
 
             if (_filters != null && _filters.Length > 0)
             {
@@ -91,14 +121,11 @@ namespace Assets.WasapiAudio.Scripts.Core
                 //}
             }
 
-            _singleBlockNotificationStream = new SingleBlockNotificationStream(sampleSource);
-            _realtimeSource = _singleBlockNotificationStream.ToWaveSource();
-
-            var buffer = new byte[_realtimeSource.WaveFormat.AverageBytesPerSecond / 2];
+            var buffer = new byte[_wasapiCapture.WaveFormat.AverageBytesPerSecond / 2];
 
             _wasapiCapture.DataAvailable += (s, ea) =>
             {
-                while (_realtimeSource.Read(buffer, 0, buffer.Length) > 0)
+                while (_waveInProvider.Read(buffer, 0, buffer.Length) > 0)
                 {
                     var spectrumData = _lineSpectrum.GetSpectrumData(MaxAudioValue);
 
@@ -111,21 +138,20 @@ namespace Assets.WasapiAudio.Scripts.Core
 
             _wasapiCapture.StartRecording();
 
-            _singleBlockNotificationStream.SingleBlockRead += SingleBlockNotificationStream_SingleBlockRead;
+            _notifyingSampleProvider.Sample += NotifyingSampleProvider_Sample;
         }
 
         public void StopListen()
         {
-            _singleBlockNotificationStream.SingleBlockRead -= SingleBlockNotificationStream_SingleBlockRead;
+            _notifyingSampleProvider.Sample -= NotifyingSampleProvider_Sample;
 
-            _soundInSource.Dispose();
-            _realtimeSource.Dispose();
+ 
             _receiveAudio = null;
             _wasapiCapture.StopRecording();
             _wasapiCapture.Dispose();
         }
 
-        private void SingleBlockNotificationStream_SingleBlockRead(object sender, SingleBlockReadEventArgs e)
+        private void NotifyingSampleProvider_Sample(object sender, SampleEventArgs e)
         {
             _basicSpectrumProvider.Add(e.Left, e.Right);
         }

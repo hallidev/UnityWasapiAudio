@@ -1,5 +1,5 @@
-﻿using NAudio.Dsp;
-using System;
+﻿using System;
+using NAudio.Dsp;
 
 namespace Assets.WasapiAudio.Scripts.Core
 {
@@ -10,7 +10,7 @@ namespace Assets.WasapiAudio.Scripts.Core
     /// Usage: Use the <see cref="Add(float[],int)"/>-method to input samples to the <see cref="FftProvider"/>. Use the <see cref="GetFftData(float[])"/> method to 
     /// calculate the Fast Fourier Transform.
     /// </remarks>
-    public class FftProvider
+    public class FftProviderEx
     {
         private readonly int _channels;
         private readonly FftSize _fftSize;
@@ -51,7 +51,7 @@ namespace Assets.WasapiAudio.Scripts.Core
         /// <param name="channels">Number of channels of the input data.</param>
         /// <param name="fftSize">The number of bands to use.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="channels"/> is less than zero.</exception>
-        public FftProvider(int channels, FftSize fftSize)
+        public FftProviderEx(int channels, FftSize fftSize)
         {
             if (channels < 1)
                 throw new ArgumentOutOfRangeException("channels");
@@ -66,7 +66,7 @@ namespace Assets.WasapiAudio.Scripts.Core
             _fftSizeExponent = (int)exponent;
             _storedSamples = new Complex[(int)fftSize];
 
-            WindowFunction = WindowFunctions.BlackmannHarris;
+            WindowFunction = WindowFunctions.None;
         }
 
         /// <summary>
@@ -145,7 +145,8 @@ namespace Assets.WasapiAudio.Scripts.Core
 
                 for (int i = 0; i < input.Length; i++)
                 {
-                    input[i].X *= WindowFunction(i, input.Length);
+                    var windowFunctionVal = WindowFunction(i, input.Length);
+                    input[i].X *= windowFunctionVal;
                 }
 
                 result = _newDataAvailable;

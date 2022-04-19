@@ -1,10 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Assets.WasapiAudio.Scripts.Core
 {
     public delegate float WindowFunction(int index, int width);
 
-    internal static class WindowFunctions
+    /// <summary>
+    /// Defines window functions.
+    /// </summary>
+    public static class WindowFunctions
     {
         /// <summary>
         /// Hamming Window
