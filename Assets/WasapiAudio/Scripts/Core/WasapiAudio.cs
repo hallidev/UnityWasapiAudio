@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using NAudio.CoreAudioApi;
+using NAudio.CoreAudioApi.Interfaces;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 
@@ -43,7 +45,8 @@ namespace Assets.WasapiAudio.Scripts.Core
             switch (_captureType)
             {
                 case WasapiCaptureType.Loopback:
-                    var defaultDevice = new MMDeviceEnumerator().GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+                    MMDeviceEnumerator devices = new MMDeviceEnumerator();
+                    var ld = devices.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
                     _wasapiCapture = new WasapiLoopbackCapture();
                     break;
                 case WasapiCaptureType.Microphone:
