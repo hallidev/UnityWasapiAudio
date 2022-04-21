@@ -2,9 +2,8 @@
 
 namespace Assets.WasapiAudio.Scripts.Core
 {
-    public class SpectrumDescriptor
+    public class SpectrumReceiver
     {
-        public string Key { get; }
         public int SpectrumSize { get; }
         public ScalingStrategy ScalingStrategy { get; }
         public WindowFunctionType WindowFunctionType { get; }
@@ -12,11 +11,10 @@ namespace Assets.WasapiAudio.Scripts.Core
         public int MaxFrequency { get; }
         public Action<float[]> ReceiveAudio { get; }
 
-        public SpectrumDescriptor(string key, int spectrumSize, ScalingStrategy scalingStrategy,
+        public SpectrumReceiver(int spectrumSize, ScalingStrategy scalingStrategy,
             WindowFunctionType windowFunctionType, int minFrequency, int maxFrequency,
             Action<float[]> receiveAudio)
         {
-            Key = key;
             SpectrumSize = spectrumSize;
             ScalingStrategy = scalingStrategy;
             WindowFunctionType = windowFunctionType;

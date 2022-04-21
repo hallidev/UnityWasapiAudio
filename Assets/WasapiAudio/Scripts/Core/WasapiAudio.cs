@@ -15,22 +15,14 @@ namespace Assets.WasapiAudio.Scripts.Core
 
         private readonly WasapiCaptureType _captureType;
         private readonly WasapiAudioFilter[] _filters;
-        private readonly IEnumerable<SpectrumDescriptor> _spectra;
-        private readonly Dictionary<SpectrumDescriptor, SpectrumInfo> _spectrumInfos = new();
+        private readonly Dictionary<SpectrumReceiver, SpectrumInfo> _spectrumInfos = new();
 
         private WasapiCapture _wasapiCapture;
         private SoundInSource _soundInSource;
         private IWaveSource _realtimeSource;
         private SingleBlockNotificationStream _singleBlockNotificationStream;
         
-        public WasapiAudio(WasapiCaptureType captureType, WasapiAudioFilter[] filters, IEnumerable<SpectrumDescriptor> spectra)
-        {
-            _captureType = captureType;
-            _filters = filters;
-            _spectra = spectra;
-        }
-
-        public void StartListen()
+        public WasapiAudio(WasapiCaptureType captureType, WasapiAudioFilter[] filters)
         {
             switch (_captureType)
             {
@@ -53,50 +45,54 @@ namespace Assets.WasapiAudio.Scripts.Core
             _wasapiCapture.Initialize();
 
             _soundInSource = new SoundInSource(_wasapiCapture);
+            _captureType = captureType;
+            _filters = filters;
+        }
 
+        public void AddReceiver(SpectrumReceiver receiver)
+        {
+            WindowFunction windowFunction = null;
 
-            foreach (var spectrum in _spectra)
+            switch (receiver.WindowFunctionType)
             {
-                WindowFunction windowFunction = null;
-
-                switch (spectrum.WindowFunctionType)
-                {
-                    case WindowFunctionType.None:
-                        windowFunction = WindowFunctions.None;
-                        break;
-                    case WindowFunctionType.Hamming:
-                        windowFunction = WindowFunctions.Hamming;
-                        break;
-                    case WindowFunctionType.HammingPeriodic:
-                        windowFunction = WindowFunctions.HammingPeriodic;
-                        break;
-                    case WindowFunctionType.Hanning:
-                        windowFunction = WindowFunctions.Hanning;
-                        break;
-                    case WindowFunctionType.HanningPeriodic:
-                        windowFunction = WindowFunctions.HanningPeriodic;
-                        break;
-                    case WindowFunctionType.BlackmannHarris:
-                        windowFunction = WindowFunctions.BlackmannHarris;
-                        break;
-                    default:
-                        throw new Exception("Unknown WindowFunctionType");
-                }
-
-                var basicSpectrumProvider = new BasicSpectrumProvider(_soundInSource.WaveFormat.Channels, _soundInSource.WaveFormat.SampleRate, CFftSize, windowFunction);
-
-                var lineSpectrum = new LineSpectrum(CFftSize, spectrum.MinFrequency, spectrum.MaxFrequency)
-                {
-                    SpectrumProvider = basicSpectrumProvider,
-                    BarCount = spectrum.SpectrumSize,
-                    UseAverage = true,
-                    IsXLogScale = true,
-                    ScalingStrategy = spectrum.ScalingStrategy
-                };
-
-                _spectrumInfos.Add(spectrum, new SpectrumInfo(basicSpectrumProvider, lineSpectrum));
+                case WindowFunctionType.None:
+                    windowFunction = WindowFunctions.None;
+                    break;
+                case WindowFunctionType.Hamming:
+                    windowFunction = WindowFunctions.Hamming;
+                    break;
+                case WindowFunctionType.HammingPeriodic:
+                    windowFunction = WindowFunctions.HammingPeriodic;
+                    break;
+                case WindowFunctionType.Hanning:
+                    windowFunction = WindowFunctions.Hanning;
+                    break;
+                case WindowFunctionType.HanningPeriodic:
+                    windowFunction = WindowFunctions.HanningPeriodic;
+                    break;
+                case WindowFunctionType.BlackmannHarris:
+                    windowFunction = WindowFunctions.BlackmannHarris;
+                    break;
+                default:
+                    throw new Exception("Unknown WindowFunctionType");
             }
 
+            var basicSpectrumProvider = new BasicSpectrumProvider(_soundInSource.WaveFormat.Channels, _soundInSource.WaveFormat.SampleRate, CFftSize, windowFunction);
+
+            var lineSpectrum = new LineSpectrum(CFftSize, receiver.MinFrequency, receiver.MaxFrequency)
+            {
+                SpectrumProvider = basicSpectrumProvider,
+                BarCount = receiver.SpectrumSize,
+                UseAverage = true,
+                IsXLogScale = true,
+                ScalingStrategy = receiver.ScalingStrategy
+            };
+
+            _spectrumInfos.Add(receiver, new SpectrumInfo(basicSpectrumProvider, lineSpectrum));
+        }
+
+        public void StartListen()
+        {
             _wasapiCapture.Start();
 
             var sampleSource = _soundInSource.ToSampleSource();
@@ -132,7 +128,7 @@ namespace Assets.WasapiAudio.Scripts.Core
             {
                 while (_realtimeSource.Read(buffer, 0, buffer.Length) > 0)
                 {
-                    // Emit events for all of the spectra
+                    // Emit events for all of the receivers
                     foreach (var spectrum in _spectrumInfos.Keys)
                     {
                         var spectrumInfo = _spectrumInfos[spectrum];

@@ -24,15 +24,16 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
         public void Awake()
         {
-            var spectra = new List<SpectrumDescriptor>();
-
-            spectra.Add(new SpectrumDescriptor("Key", SpectrumSize, ScalingStrategy, WindowFunctionType, MinFrequency, MaxFrequency, spectrumData =>
-            {
-                _spectrumData = spectrumData;
-            }));
+            var receiver = new SpectrumReceiver(SpectrumSize, ScalingStrategy, WindowFunctionType, MinFrequency,
+                MaxFrequency, spectrumData =>
+                {
+                    _spectrumData = spectrumData;
+                });
 
             // Setup loopback audio and start listening
-            _wasapiAudio = new Core.WasapiAudio(CaptureType, Filters, spectra);
+            _wasapiAudio = new Core.WasapiAudio(CaptureType, Filters);
+
+            _wasapiAudio.AddReceiver(receiver);
 
             _wasapiAudio.StartListen();
         }
