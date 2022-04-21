@@ -10,7 +10,7 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
         [SerializeReference]
         [SerializeReferenceButton]
-        public List<SpectrumTransformer> Transformers = new List<SpectrumTransformer>();
+        public List<SpectrumTransformer> Transformers = new();
 
         [SpectrumDataPreview]
         public SpectrumData Preview;

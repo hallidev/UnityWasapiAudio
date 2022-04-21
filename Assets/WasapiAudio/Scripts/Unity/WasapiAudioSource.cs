@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.WasapiAudio.Scripts.Core;
 using UnityEngine;
 
@@ -23,11 +24,15 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
         public void Awake()
         {
-            // Setup loopback audio and start listening
-            _wasapiAudio = new Core.WasapiAudio(CaptureType, SpectrumSize, ScalingStrategy, WindowFunctionType, MinFrequency, MaxFrequency, Filters, spectrumData =>
+            var spectra = new List<SpectrumDescriptor>();
+
+            spectra.Add(new SpectrumDescriptor("Key", SpectrumSize, ScalingStrategy, WindowFunctionType, MinFrequency, MaxFrequency, spectrumData =>
             {
                 _spectrumData = spectrumData;
-            });
+            }));
+
+            // Setup loopback audio and start listening
+            _wasapiAudio = new Core.WasapiAudio(CaptureType, Filters, spectra);
 
             _wasapiAudio.StartListen();
         }

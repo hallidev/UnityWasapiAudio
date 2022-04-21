@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CSCore;
 using CSCore.CoreAudioAPI;
 using CSCore.DSP;
@@ -13,31 +14,20 @@ namespace Assets.WasapiAudio.Scripts.Core
         private const float MaxAudioValue = 1.0f;
 
         private readonly WasapiCaptureType _captureType;
-        private readonly int _spectrumSize;
-        private readonly ScalingStrategy _scalingStrategy;
-        private readonly WindowFunctionType _windowFunctionType;
-        private readonly int _minFrequency;
-        private readonly int _maxFrequency;
+        private readonly WasapiAudioFilter[] _filters;
+        private readonly IEnumerable<SpectrumDescriptor> _spectra;
+        private readonly Dictionary<SpectrumDescriptor, SpectrumInfo> _spectrumInfos = new();
 
         private WasapiCapture _wasapiCapture;
         private SoundInSource _soundInSource;
         private IWaveSource _realtimeSource;
-        private BasicSpectrumProvider _basicSpectrumProvider;
-        private LineSpectrum _lineSpectrum;
         private SingleBlockNotificationStream _singleBlockNotificationStream;
-        private WasapiAudioFilter[] _filters;
-        private Action<float[]> _receiveAudio;
-
-        public WasapiAudio(WasapiCaptureType captureType, int spectrumSize, ScalingStrategy scalingStrategy, WindowFunctionType windowFunctionType, int minFrequency, int maxFrequency, WasapiAudioFilter[] filters, Action<float[]> receiveAudio)
+        
+        public WasapiAudio(WasapiCaptureType captureType, WasapiAudioFilter[] filters, IEnumerable<SpectrumDescriptor> spectra)
         {
             _captureType = captureType;
-            _spectrumSize = spectrumSize;
-            _scalingStrategy = scalingStrategy;
-            _windowFunctionType = windowFunctionType;
-            _minFrequency = minFrequency;
-            _maxFrequency = maxFrequency;
             _filters = filters;
-            _receiveAudio = receiveAudio;
+            _spectra = spectra;
         }
 
         public void StartListen()
@@ -64,42 +54,48 @@ namespace Assets.WasapiAudio.Scripts.Core
 
             _soundInSource = new SoundInSource(_wasapiCapture);
 
-            WindowFunction windowFunction = null;
 
-            switch (_windowFunctionType)
+            foreach (var spectrum in _spectra)
             {
-                case WindowFunctionType.None:
-                    windowFunction = WindowFunctions.None;
-                    break;
-                case WindowFunctionType.Hamming:
-                    windowFunction = WindowFunctions.Hamming;
-                    break;
-                case WindowFunctionType.HammingPeriodic:
-                    windowFunction = WindowFunctions.HammingPeriodic;
-                    break;
-                case WindowFunctionType.Hanning:
-                    windowFunction = WindowFunctions.Hanning;
-                    break;
-                case WindowFunctionType.HanningPeriodic:
-                    windowFunction = WindowFunctions.HanningPeriodic;
-                    break;
-                case WindowFunctionType.BlackmannHarris:
-                    windowFunction = WindowFunctions.BlackmannHarris;
-                    break;
-                default:
-                    throw new Exception("Unknown WindowFunctionType");
+                WindowFunction windowFunction = null;
+
+                switch (spectrum.WindowFunctionType)
+                {
+                    case WindowFunctionType.None:
+                        windowFunction = WindowFunctions.None;
+                        break;
+                    case WindowFunctionType.Hamming:
+                        windowFunction = WindowFunctions.Hamming;
+                        break;
+                    case WindowFunctionType.HammingPeriodic:
+                        windowFunction = WindowFunctions.HammingPeriodic;
+                        break;
+                    case WindowFunctionType.Hanning:
+                        windowFunction = WindowFunctions.Hanning;
+                        break;
+                    case WindowFunctionType.HanningPeriodic:
+                        windowFunction = WindowFunctions.HanningPeriodic;
+                        break;
+                    case WindowFunctionType.BlackmannHarris:
+                        windowFunction = WindowFunctions.BlackmannHarris;
+                        break;
+                    default:
+                        throw new Exception("Unknown WindowFunctionType");
+                }
+
+                var basicSpectrumProvider = new BasicSpectrumProvider(_soundInSource.WaveFormat.Channels, _soundInSource.WaveFormat.SampleRate, CFftSize, windowFunction);
+
+                var lineSpectrum = new LineSpectrum(CFftSize, spectrum.MinFrequency, spectrum.MaxFrequency)
+                {
+                    SpectrumProvider = basicSpectrumProvider,
+                    BarCount = spectrum.SpectrumSize,
+                    UseAverage = true,
+                    IsXLogScale = true,
+                    ScalingStrategy = spectrum.ScalingStrategy
+                };
+
+                _spectrumInfos.Add(spectrum, new SpectrumInfo(basicSpectrumProvider, lineSpectrum));
             }
-
-            _basicSpectrumProvider = new BasicSpectrumProvider(_soundInSource.WaveFormat.Channels, _soundInSource.WaveFormat.SampleRate, CFftSize, windowFunction);
-
-            _lineSpectrum = new LineSpectrum(CFftSize, _minFrequency, _maxFrequency)
-            {
-                SpectrumProvider = _basicSpectrumProvider,
-                BarCount = _spectrumSize,
-                UseAverage = true,
-                IsXLogScale = true,
-                ScalingStrategy = _scalingStrategy
-            };
 
             _wasapiCapture.Start();
 
@@ -136,11 +132,16 @@ namespace Assets.WasapiAudio.Scripts.Core
             {
                 while (_realtimeSource.Read(buffer, 0, buffer.Length) > 0)
                 {
-                    var spectrumData = _lineSpectrum.GetSpectrumData(MaxAudioValue);
-
-                    if (spectrumData != null)
+                    // Emit events for all of the spectra
+                    foreach (var spectrum in _spectrumInfos.Keys)
                     {
-                        _receiveAudio?.Invoke(spectrumData);
+                        var spectrumInfo = _spectrumInfos[spectrum];
+                        var spectrumData = spectrumInfo.LineSpectrum.GetSpectrumData(MaxAudioValue);
+
+                        if (spectrumData != null)
+                        {
+                            spectrum.ReceiveAudio?.Invoke(spectrumData);
+                        }
                     }
                 }
             };
@@ -154,14 +155,29 @@ namespace Assets.WasapiAudio.Scripts.Core
 
             _soundInSource.Dispose();
             _realtimeSource.Dispose();
-            _receiveAudio = null;
             _wasapiCapture.Stop();
             _wasapiCapture.Dispose();
         }
 
         private void SingleBlockNotificationStream_SingleBlockRead(object sender, SingleBlockReadEventArgs e)
         {
-            _basicSpectrumProvider.Add(e.Left, e.Right);
+            // Feed all of the spectra
+            foreach (var spectrumInfo in _spectrumInfos.Values)
+            {
+                spectrumInfo.Provider.Add(e.Left, e.Right);
+            }
+        }
+
+        private class SpectrumInfo
+        {
+            public BasicSpectrumProvider Provider { get; }
+            public LineSpectrum LineSpectrum { get; }
+
+            public SpectrumInfo(BasicSpectrumProvider provider, LineSpectrum lineSpectrum)
+            {
+                Provider = provider;
+                LineSpectrum = lineSpectrum;
+            }
         }
     }
 }
