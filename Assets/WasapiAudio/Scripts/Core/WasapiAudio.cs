@@ -91,7 +91,7 @@ namespace Assets.WasapiAudio.Scripts.Core
             _spectrumInfos.Add(receiver, new SpectrumInfo(basicSpectrumProvider, lineSpectrum));
         }
 
-        public void StartListen()
+        public void StartCapture()
         {
             _wasapiCapture.Start();
 
@@ -145,7 +145,7 @@ namespace Assets.WasapiAudio.Scripts.Core
             _singleBlockNotificationStream.SingleBlockRead += SingleBlockNotificationStream_SingleBlockRead;
         }
 
-        public void StopListen()
+        public void StopCapture()
         {
             _singleBlockNotificationStream.SingleBlockRead -= SingleBlockNotificationStream_SingleBlockRead;
 
