@@ -23,7 +23,8 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
         [SpectrumDataPreview]
         public SpectrumData Preview;
-        protected bool IsIdle => _spectrumData.All(v => v < 0.001f);
+
+        protected bool IsIdle => _spectrumData?.All(v => v < 0.001f) ?? true;
 
         public virtual void Awake()
         {

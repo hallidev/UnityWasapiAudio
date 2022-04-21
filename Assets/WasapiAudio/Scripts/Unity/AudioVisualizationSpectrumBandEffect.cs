@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Assets.WasapiAudio.Scripts.Unity
 {
@@ -8,6 +9,8 @@ namespace Assets.WasapiAudio.Scripts.Unity
 
         // Inspector properties
         public int SpectrumBand;
+
+        protected bool IsIdle => _spectrumData?.All(v => v < 0.001f) ?? true;
 
         public void SetSpectrumData(float[] spectrumData)
         {
