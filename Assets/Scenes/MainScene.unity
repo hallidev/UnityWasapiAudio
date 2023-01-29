@@ -448,6 +448,53 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
   m_PVRTiledBaking: 0
+--- !u!28 &1249459050
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AudioSpectrumData32
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 2
+  m_Width: 32
+  m_Height: 1
+  m_CompleteImageSize: 128
+  m_MipsStripped: 0
+  m_TextureFormat: 18
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMasterTextureLimit: 0
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 0
+  m_PlatformBlob: 
+  image data: 128
+  _typelessdata: e49a3c3ec531333e3f79103e43fb4a3d86884f3dc6f0443d7d924c3db621443d9fa0483d3ec9573df3e2433d6b303a3ded5c333de304393d540c333db866103dccdc0c3ded26043d6b15083d2650fb3c4b4bdc3c3062bd3c7a28cc3c5a60cc3cd209be3ced10c83ca6f5bd3cbd39a43cf50d843c1897543cd6ac3f3c6aa1003c
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1346627525
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,53 +592,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1346627525}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!28 &1487495503
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: AudioSpectrumData32
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 2
-  m_Width: 32
-  m_Height: 1
-  m_CompleteImageSize: 128
-  m_MipsStripped: 0
-  m_TextureFormat: 18
-  m_MipCount: 1
-  m_IsReadable: 1
-  m_IsPreProcessed: 0
-  m_IgnoreMasterTextureLimit: 0
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
-  m_VTOnly: 0
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_LightmapFormat: 0
-  m_ColorSpace: 0
-  m_PlatformBlob: 
-  image data: 128
-  _typelessdata: 9ab3483c8d183c3c65de4e3cb7bd553c21666a3ca194683ca2a7373d5fdf6d3ceae75b3c94ca6e3c7f797e3cbfe5703c8440853c9231773c26fa553c166e733cb61e833c1061653c38bf5e3c11ee663c2da7583c7681803cded4303d4f2b893ca1c72e3d937e823cec78723cdb18723c36684f3c1b2c323c21291e3ca870b53b
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1633983271
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +707,7 @@ MonoBehaviour:
   taaMotionVectorRejection: 0
   taaAntiHistoryRinging: 0
   taaBaseBlendFactor: 0.875
+  taaJitterScale: 1
   physicalParameters:
     m_Iso: 200
     m_ShutterSpeed: 0.005
@@ -968,38 +969,38 @@ MonoBehaviour:
   - rid: 1
   Preview:
     Values:
-    - 0.054129083
-    - 0.069263786
-    - 0.28260574
-    - 0.2303724
-    - 0.08336536
-    - 0.085301474
-    - 0.21559902
-    - 0.06498469
-    - 0.045172244
-    - 0.033087347
-    - 0.028311541
-    - 0.029647438
-    - 0.060696974
-    - 0.059622064
-    - 0.073148146
-    - 0.08060835
-    - 0.07535921
-    - 0.051489618
-    - 0.034987856
-    - 0.026130171
-    - 0.02348792
-    - 0.022747533
-    - 0.027544625
-    - 0.030255536
-    - 0.02841801
-    - 0.033041395
-    - 0.033325706
-    - 0.030435646
-    - 0.024062708
-    - 0.022378651
-    - 0.018065955
-    - 0.011801802
+    - 0.18418461
+    - 0.17499454
+    - 0.14108752
+    - 0.049556028
+    - 0.05066731
+    - 0.048081182
+    - 0.04994439
+    - 0.04788371
+    - 0.048981305
+    - 0.052682154
+    - 0.047823858
+    - 0.04545633
+    - 0.043789793
+    - 0.045170676
+    - 0.04371293
+    - 0.03525421
+    - 0.034390256
+    - 0.032263685
+    - 0.03322355
+    - 0.030677866
+    - 0.026891371
+    - 0.023118109
+    - 0.024921644
+    - 0.024948288
+    - 0.023198042
+    - 0.024422133
+    - 0.023188423
+    - 0.020047063
+    - 0.016119936
+    - 0.012975477
+    - 0.011698922
+    - 0.007850984
   SpectrumSizeParameter:
     m_Name: SpectrumSize
   SpectrumDataTextureParameter:
@@ -1138,7 +1139,7 @@ VisualEffect:
       m_Array: []
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 0}
+      - m_Value: {fileID: 1249459050}
         m_Name: SpectrumDataTexture
         m_Overridden: 1
     m_Bool:
